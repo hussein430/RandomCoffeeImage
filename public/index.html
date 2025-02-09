@@ -47,7 +47,7 @@
             imageContainer.innerHTML = "<p>Loading...</p>";
 
             try {
-                const response = await fetch("http://localhost:3000/api/coffee");
+                const response = await fetch("/api/coffee");
                 const data = await response.json();
                 
                 imageContainer.innerHTML = `<img src="${data.file}" alt="Coffee Image">`;
