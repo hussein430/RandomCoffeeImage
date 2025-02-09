@@ -1,61 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Random Coffee</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f5f5f5;
-            padding: 20px;
-        }
-        h1 {
-            color: #6f4e37;
-        }
-        img {
-            max-width: 100%;
-            max-height: 500px;
-            border-radius: 8px;
-            margin-top: 20px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #6f4e37;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        button:hover {
-            background-color: #5a3e2b;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f5f5f5;
+        padding: 20px;
+      }
+      h1 {
+        color: #6f4e37;
+      }
+      img {
+        max-width: 100%;
+        max-height: 500px;
+        border-radius: 8px;
+        margin-top: 20px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #6f4e37;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 20px;
+      }
+      button:hover {
+        background-color: #5a3e2b;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Random Coffee Image</h1>
     <button id="fetchCoffee">Get Coffee</button>
     <div id="imageContainer"></div>
 
     <script>
-        document.getElementById("fetchCoffee").addEventListener("click", async () => {
-            const imageContainer = document.getElementById("imageContainer");
-            imageContainer.innerHTML = "<p>Loading...</p>";
+      document
+        .getElementById("fetchCoffee")
+        .addEventListener("click", async () => {
+          const imageContainer = document.getElementById("imageContainer");
+          imageContainer.innerHTML = "<p>Loading...</p>";
 
-            try {
-                const response = await fetch("/api/coffee");
-                const data = await response.json();
-                
-                imageContainer.innerHTML = `<img src="${data.file}" alt="Coffee Image">`;
-            } catch (error) {
-                console.error("Error fetching coffee image:", error);
-                imageContainer.innerHTML = "<p style='color: red;'>Failed to load image. Try again!</p>";
-            }
+          try {
+            // Get the current base URL of the site (for both local and production)
+            const baseUrl = window.location.origin;
+            // Build the full API URL
+            const apiUrl = `${baseUrl}/api/coffee`;
+
+            // Send the request to your backend
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+
+            // Display the coffee image
+            imageContainer.innerHTML = `<img src="${data.file}" alt="Coffee Image">`;
+          } catch (error) {
+            console.error("Error fetching coffee image:", error);
+            imageContainer.innerHTML =
+              "<p style='color: red;'>Failed to load image. Try again!</p>";
+          }
         });
     </script>
-</body>
+  </body>
 </html>
